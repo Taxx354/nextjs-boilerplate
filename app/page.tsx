@@ -53,11 +53,22 @@ const GoogleSheetData = () => {
 
   return (
     <div>
-      <h1>Datos de Google Sheets</h1>
+      <h1>IDENTIFICACION MASCOTAS</h1>
       <ul>
        {sheetData.map((item, index) => (
           <li key={index}>
-            <strong>{item.Raza}</strong> - {item.dni}
+            <strong> DNI</strong>: {item.dni} 
+            <br />
+            <strong>Nombre Dueño</strong>: {item.nombredueno}
+            <br />
+            <strong>Nombre Mascota</strong>: {item.nombremascota}
+            <br />
+            <strong>Tipo de mascota</strong>: {item.tipo}
+            <br />
+            <strong>Caracteristica adicional</strong>: {item.caracteristica}
+            <br />
+            <strong>Celular Dueño</strong>: {item.celular}
+
           </li>
         ))}
       </ul>
