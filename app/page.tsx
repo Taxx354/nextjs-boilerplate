@@ -7,7 +7,6 @@ const GoogleSheetData = () => {
 
   useEffect(() => {
     const fetchSheetData = async () => {
-      //console.log(dni);
       try {
         const response = await fetch(url);
         const data = await response.text();
@@ -27,20 +26,16 @@ const GoogleSheetData = () => {
           jsonData.push(obj);
         }
 
-        if (typeof window !== 'undefined') {
-          const params = new URLSearchParams(window.location.search);
-          const dni = params.get('dni');
-  
-          if (dni) {
-            const filteredData = jsonData.filter(item => item.dni === dni);
-            if (Array.isArray(filteredData)) {
-              // Actualiza el estado sheetData con los datos obtenidos
-              setSheetData(filteredData);
-            }
-            console.log(filteredData);
-          } else {
-            console.log('No se proporcionó un DNI en los parámetros GET.');
+        const params = new URLSearchParams(window.location.search);
+        const dni = params.get('dni');
+
+        if (dni) {
+          const filteredData = jsonData.filter(item => item.dni === dni);
+          if (Array.isArray(filteredData)) {
+            setSheetData(filteredData);
           }
+        } else {
+          console.log('No se proporcionó un DNI en los parámetros GET.');
         }
       } catch (error) {
         console.error('Error al obtener los datos:', error);
@@ -49,32 +44,51 @@ const GoogleSheetData = () => {
     };
 
     fetchSheetData();
-  }, []); // Ejecutar una sola vez al cargar el componente
+  }, []);
 
   return (
     <div>
-      <h1>IDENTIFICACION MASCOTAS</h1>
-      <ul>
-       {sheetData.map((item, index) => (
-          <li key={index}>
-            <strong> DNI</strong>: {item.dni} 
-            <br />
-            <strong>Nombre Dueño</strong>: {item.nombredueno}
-            <br />
-            <strong>Nombre Mascota</strong>: {item.nombremascota}
-            <br />
-            <strong>Tipo de mascota</strong>: {item.tipo}
-            <br />
-            <strong>Caracteristica adicional</strong>: {item.caracteristica}
-            <br />
-            <strong>Celular Dueño</strong>: {item.celular}
-
-          </li>
-        ))}
-      </ul>
+      <header>
+        <br />
+        <h1> <strong>IDENTIFICACIÓN MASCOTAS</strong></h1>
+        <br />
+      </header>
+      <div className='div-centrado'>
+        <div className='contenedor'>
+          <br/>
+          <ul>
+            {sheetData.map((item, index) => (
+              <li key={index}>
+                <div className='contenedor'><ImageDisplay link="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT69szUDIz8XcApPzK83e3Ke_8IHDcLJ7g3D-9atC1_vg&s" /></div>
+                <br />
+                <strong> DNI</strong>: {item.DNI} 
+                <br />
+                <strong>Nombre Dueño</strong>: {item.nombredueno}
+                <br />
+                <strong>Nombre Mascota</strong>: {item.nombremascota}
+                <br />
+                <strong>Tipo de mascota</strong>: {item.tipo}
+                <br />
+                <strong>Caracteristica adicional</strong>: {item.caracteristica}
+                <br />
+                <strong>Celular Dueño</strong>: {item.celular}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
   
 };
-
+function ImageDisplay({ link }: ImageDisplayProps) {
+  return (
+    <div>
+      <img src={link} alt="Imagen" />
+    </div>
+  );
+}
+interface ImageDisplayProps {
+  link: string; // Especificamos que el tipo de 'link' debe ser una cadena (URL de la imagen)
+}
 export default GoogleSheetData;
