@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 const GoogleSheetData = () => {
   const [sheetData, setSheetData] = useState<{ [key: string]: string }[]>([]);
   const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6K-g3BOeuMtXmXQ-3hUxKPKd9DVN48vSLH2M8vPtcjByFcvwtY7mwL735kd46cu-W3rAglI-PBJUq/pub?output=csv';
-
+  <head><link rel="icon" href="/favicon.ico" sizes="any" />  </head>
   useEffect(() => {
     const fetchSheetData = async () => {
       try {
