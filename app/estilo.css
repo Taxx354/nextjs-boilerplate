@@ -1,0 +1,120 @@
+    /* Estilo general moderno */
+    body {
+        font-family: 'Arial', sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #fff;
+        background-color: #222;
+        margin: 20px;
+    }
+    
+    /* Encabezado */
+    header {
+        background-color: #333;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Título del encabezado */
+    h1 {
+        font-size: 2.5em;
+        margin: 0;
+        color: #fff;
+    }
+    
+    /* Contenedor principal */
+    .main-container {
+        width: 80%;
+        margin: 0 auto;
+    }
+    
+    /* Secciones */
+    .section {
+        padding: 20px;
+        border-bottom: 1px solid #444;
+    }
+    
+    /* Enlaces */
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+    
+    a:hover {
+        color: #0056b3;
+        text-shadow: 0 0 5px #007bff;
+    }
+    
+    /* Botones */
+    button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 12px 25px; /* Aumento del acolchado para mayor espacio */
+        border: none;
+        border-radius: 50px; /* Esquinas redondeadas más pronunciadas */
+        font-size: 18px; /* Aumento del tamaño de fuente para mayor visibilidad */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para mayor profundidad */
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    
+    /* Formulario */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    input[type="number"],
+    input[type="time"] {
+        padding: 10px;
+        border: 1px solid #666;
+        border-radius: 5px;
+        width: 100%;
+        margin-bottom: 10px;
+        background-color: #333;
+        color: #fff;
+    }
+    
+    input[type="time"] {
+        /* Mismos estilos que el input type "number" */
+    }
+    
+    input[type="submit"] {
+        /* Mismos estilos que los botones, con las siguientes modificaciones: */
+        width: auto; /* Ancho adaptable al contenido */
+        max-width: 200px; /* Ancho máximo para evitar que sea demasiado grande */
+        margin-top: 15px; /* Margen superior para mayor separación */
+    }
+    
+    /* Etiquetas de selección */
+    select {
+        padding: 10px;
+        border: 1px solid #666;
+        border-radius: 5px;
+        width: 100%;
+        margin-bottom: 10px;
+        background-color: #333;
+        color: #fff;
+    }
+    table {
+        width: 100%; /* Ancho completo de la tabla */
+        border-collapse: collapse; /* Combinar bordes de celdas adyacentes */
+        margin-top: 20px; /* Margen superior para la tabla */
+    }
+    
+    th,
+    td {
+        padding: 10px; /* Acolchado para celdas */
+        border: 1px solid #666; /* Bordes para celdas */
+        text-align: left; /* Alineación de texto a la izquierda */
+    }
+    
+    th {
+        background-color: #333; /* Color de fondo para encabezados de tabla */
+        color: #fff; /* Color de texto para encabezados de tabla */
+        font-weight: bold; /* Peso de fuente seminegrita para encabezados de tabla */
+    }
+    
