@@ -98,6 +98,7 @@ input[type="time"] {
   color: #fff;
 }
 
+
 input[type="submit"] {
   /* Mismos estilos que los botones, con las siguientes modificaciones: */
   width: auto; /* Ancho adaptable al contenido */
@@ -138,7 +139,16 @@ th {
   width: 400px; /* Ancho del div */
   margin: 0 auto; /* Establece los márgenes automáticos */
 }
-
+@media (max-width: 768px) {
+  .div-head img {
+    margin-top: -27px;
+  }
+  .div-head h1 {
+    margin-top: -7vw;
+    margin-left: 8vw;
+    font-size: 16px;
+  }
+}
 .div-head img {
   margin-top: -27px;
 }
