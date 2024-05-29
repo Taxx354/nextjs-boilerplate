@@ -158,6 +158,11 @@ th {
   margin-left: 77px;
 }
 
+.fondo{
+  margin-top: 100px;
+  background-color: #0056b3;
+}
+
 .contenedor {
   display: flex;
   justify-content: center; /* Centra horizontalmente */
