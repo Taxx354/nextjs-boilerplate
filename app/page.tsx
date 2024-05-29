@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 const GoogleSheetData = () => {
   const [sheetData, setSheetData] = useState<{ [key: string]: string }[]>([]);
-  const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6K-g3BOeuMtXmXQ-3hUxKPKd9DVN48vSLH2M8vPtcjByFcvwtY7mwL735kd46cu-W3rAglI-PBJUq/pub?output=csv';
+  const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR9s1KZEX30u4NRRrCakzW3EaqQObHh4jAB9HJ5GUybTdceeRagq76vE1T8CwN5FJ-gmsvdZcdsNT4M/pub?output=csv';
 
   useEffect(() => {
     const fetchSheetData = async () => {
@@ -33,7 +33,7 @@ const GoogleSheetData = () => {
           const dni = params.get('dni');
   
           if (dni) {
-            const filteredData = jsonData.filter(item => String(item['DNI']) === dni);
+            const filteredData = jsonData.filter(item => String(item['DNI del dueño de la mascota (sin puntos)']) === dni);
             if (Array.isArray(filteredData)) {
               // Actualiza el estado sheetData con los datos obtenidos
               setSheetData(filteredData);
@@ -73,20 +73,20 @@ const GoogleSheetData = () => {
             {sheetData.map((item, index) => (
               <li key={index}>
                 <div className='contenedor'>
-                  <ImageDisplay link="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT69szUDIz8XcApPzK83e3Ke_8IHDcLJ7g3D-9atC1_vg&s" />
+                  <ImageDisplay link={item['Tipo de Mascota']}  />
                 </div>
                 <br />
                 <strong> DNI</strong>: {item['DNI']}
                 <br />
-                <strong>Nombre dueño</strong>: {item['Nombre dueño']}
+                <strong>Nombre dueño</strong>: {item['Nombre del Dueño de la Mascota']} {item['Apellido del Dueño de la Mascota']}
                 <br />
-                <strong>Nombre mascota</strong>: {item['Nombre_mascota']}
+                <strong>Nombre mascota</strong>: {item['Nombre de la MASCOTA']}
                 <br />
                 <strong>Tipo de mascota</strong>: {item['Tipo de mascota']}
                 <br />  
                 <strong>Raza</strong>: {item['Raza']}
                 <br />
-                <strong>Caracteristica adicional</strong>: {item['Caracteristica mascota']}
+                <strong>Caracteristica adicional</strong>: {item['Dirección de correo electrónico']}
                 <br />
                 <strong>Celular dueño</strong>: {item['Telefono celular']}
               </li>
