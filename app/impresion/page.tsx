@@ -57,10 +57,8 @@ const GoogleSheetData = () => {
                 <br />
                 <strong> DNI</strong>: {item['DNI del dueño de la mascota (sin puntos)']}
                 <br />
-                 <a>QR</a>: {item['QR']}
+                <strong>QR</strong>:<ImageDisplay link={item['QR']}/>
               </li>
-                
-
             ))}
           </ul>
     </div>
