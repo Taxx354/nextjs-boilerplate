@@ -89,7 +89,9 @@ const GoogleSheetData = () => {
                 <strong>Caracteristica adicional</strong>: {item['Dirección de correo electrónico']}
                 <br />
                 <strong>Celular dueño</strong>: {item['Telefono celular']}
-              </li>
+                <br />
+                 <strong>QR</strong>: <ImageDisplay link={item["QRserv\r"]}/>
+                </li>
                 
 
             ))}
