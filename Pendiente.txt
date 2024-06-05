@@ -1,0 +1,3 @@
+Agregar imagen de la mascota al perfil
+
+Agregar un botón por cada QR para imprimir cada uno por separado
