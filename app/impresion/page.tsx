@@ -1,10 +1,12 @@
+// pages/index.tsx (o el nombre de tu archivo principal)
 'use client'
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const GoogleSheetData = () => {
   const [sheetData, setSheetData] = useState<{ [key: string]: string }[]>([]);
-  const [selectedQR, setSelectedQR] = useState<string | null>(null);
   const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR9s1KZEX30u4NRRrCakzW3EaqQObHh4jAB9HJ5GUybTdceeRagq76vE1T8CwN5FJ-gmsvdZcdsNT4M/pub?output=csv';
+  const router = useRouter();
 
   useEffect(() => {
     const fetchSheetData = async () => {
@@ -42,32 +44,25 @@ const GoogleSheetData = () => {
   }, []);
 
   const handleQRClick = (link: string) => {
-    setSelectedQR(link);
+    router.push(`/qr?link=${encodeURIComponent(link)}`);
   };
 
   return (
     <div className='fondo'>
       <h1>Ultimos agregados</h1>
-      {selectedQR ? (
-        <div>
-          <ImageDisplay link={selectedQR} />
-          <button onClick={() => setSelectedQR(null)}>Volver</button>
-        </div>
-      ) : (
-        <ul>
-          {sheetData.map((item, index) => (
-            <li key={index}>
-              <div className='contenedor'>
-                <strong>DNI</strong>: {item['DNI del dueño de la mascota (sin puntos)']}
-                <br />
-                <strong>QR</strong>: <ImageDisplay link={item["QRserv\r"]}/>
-                <br />
-                <button onClick={() => handleQRClick(item["QRserv\r"])}>Mostrar QR</button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul>
+        {sheetData.map((item, index) => (
+          <li key={index}>
+            <div className='contenedor'>
+              <strong>DNI</strong>: {item['DNI del dueño de la mascota (sin puntos)']}
+              <br />
+              <strong>QR</strong>: <ImageDisplay link={item["QRserv\r"]} />
+              <br />
+              <button onClick={() => handleQRClick(item["QRserv\r"])}>Mostrar QR</button>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
