@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 
 const GoogleSheetData = () => {
   const [sheetData, setSheetData] = useState<{ [key: string]: string }[]>([]);
-  const [selectedQRs, setSelectedQRs] = useState<string[]>([]);
+  const [selectedQR, setSelectedQR] = useState<string | null>(null);
+  const [numCopies, setNumCopies] = useState(1);
   const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR9s1KZEX30u4NRRrCakzW3EaqQObHh4jAB9HJ5GUybTdceeRagq76vE1T8CwN5FJ-gmsvdZcdsNT4M/pub?output=csv';
 
   useEffect(() => {
@@ -43,16 +44,8 @@ const GoogleSheetData = () => {
     fetchSheetData();
   }, []);
 
-  const handleToggleQR = (link: string) => {
-    setSelectedQRs((prevSelectedQRs) =>
-      prevSelectedQRs.includes(link)
-        ? prevSelectedQRs.filter((qr) => qr !== link)
-        : [...prevSelectedQRs, link]
-    );
-  };
-
-  const handlePrintSelectedQRs = () => {
-    if (selectedQRs.length === 0) return;
+  const handlePrintQR = () => {
+    if (!selectedQR) return;
 
     const printWindow = window.open('', '_blank');
     if (printWindow) {
@@ -62,11 +55,11 @@ const GoogleSheetData = () => {
             <title>Print QR</title>
             <style>
               body { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; padding: 20px; }
-              img { margin: 10px; border: 5px solid black; }
+              img { width: 1.5cm; height: 1.5cm; margin: 5px; border: 1px solid black; }
             </style>
           </head>
           <body>
-            ${selectedQRs.map((link) => `<img src="${link}" alt="QR Code" />`).join('')}
+            ${Array(numCopies).fill(`<img src="${selectedQR}" alt="QR Code" />`).join('')}
             <script>
               window.onload = function() {
                 window.print();
@@ -93,16 +86,26 @@ const GoogleSheetData = () => {
               <br />
               <strong>QR</strong>: <ImageDisplay link={item["QRserv\r"]} />
               <br />
-              <input
-                type="checkbox"
-                checked={selectedQRs.includes(item["QRserv\r"])}
-                onChange={() => handleToggleQR(item["QRserv\r"])}
-              /> Seleccionar para imprimir
+              <button onClick={() => setSelectedQR(item["QRserv\r"])}>Seleccionar QR</button>
             </div>
           </li>
         ))}
       </ul>
-      <button onClick={handlePrintSelectedQRs}>Imprimir QR seleccionados</button>
+      {selectedQR && (
+        <div>
+          <label>
+            Cantidad de copias (1-5):
+            <input
+              type="number"
+              min="1"
+              max="5"
+              value={numCopies}
+              onChange={(e) => setNumCopies(Math.min(5, Math.max(1, parseInt(e.target.value))))}
+            />
+          </label>
+          <button onClick={handlePrintQR}>Imprimir QR</button>
+        </div>
+      )}
     </div>
   );
 };
@@ -110,7 +113,7 @@ const GoogleSheetData = () => {
 const ImageDisplay = ({ link }: ImageDisplayProps) => {
   return (
     <div>
-      <img src={link} alt="Imagen" />
+      <img src={link} alt="Imagen" style={{ width: '1.5cm', height: '1.5cm' }} />
     </div>
   );
 };
