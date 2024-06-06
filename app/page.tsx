@@ -131,6 +131,9 @@ const GoogleSheetData = () => {
             {sheetData.map((item, index) => (
               <li key={index}>
                 <div className='contenedor'>
+                  <ImageDisplay url={item['Subir una Imagen de Frente de la Mascota']} />
+                </div>
+                <div className='contenedor'>
                   <ImageDisplay url={item['Subir una Imagen de Perfil de la mascota']} />
                 </div>
                 <br />
