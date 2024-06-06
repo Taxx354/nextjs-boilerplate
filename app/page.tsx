@@ -161,9 +161,7 @@ const GoogleSheetData = () => {
                 <br />
                 <strong>Localidad</strong>: {item['Localidad']}
                 <br />
-                <strong>QR</strong>: <ImageDisplay url={item["QRserv\r"]}/>
-                <br />
-                <button onClick={() => setSelectedQR(item["QRserv\r"].trim())}>Seleccionar QR</button>
+                <button onClick={() => setSelectedQR(item["QRserv\r"].trim())}>Imprimir QR</button>
               </li>
             ))}
           </ul>
