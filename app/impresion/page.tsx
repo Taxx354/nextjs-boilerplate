@@ -1,8 +1,9 @@
+'use client'
+import Image from 'next/image'
 import React, { useState, useEffect } from 'react';
 
 const GoogleSheetData = () => {
   const [sheetData, setSheetData] = useState<{ [key: string]: string }[]>([]);
-  const [codesPerPage, setCodesPerPage] = useState<number>(5); // Número de códigos QR por página
   const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR9s1KZEX30u4NRRrCakzW3EaqQObHh4jAB9HJ5GUybTdceeRagq76vE1T8CwN5FJ-gmsvdZcdsNT4M/pub?output=csv';
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const GoogleSheetData = () => {
           const params = new URLSearchParams(window.location.search);
           const dni = params.get('dni');
           const objetoinverso = jsonData.reverse();
-          let limitedData = objetoinverso.slice(0, codesPerPage);
+          let limitedData = objetoinverso.slice(0, 5);
           setSheetData(limitedData);
         }
       } catch (error) {
@@ -39,9 +40,9 @@ const GoogleSheetData = () => {
     };
 
     fetchSheetData();
-  }, [codesPerPage]);
+  }, []);
 
-  const handlePrintQR = (links: string[]) => {
+  const handlePrintQR = (link: string) => {
     const printWindow = window.open('', '_blank');
     if (printWindow) {
       printWindow.document.write(`
@@ -49,10 +50,8 @@ const GoogleSheetData = () => {
           <head>
             <title>Print QR</title>
           </head>
-          <body style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; height: 100vh; background-color: #fff;">
-            ${links.map((link) => `
-              <img src="${link}" alt="QR Code" style="border: 5px solid black; margin: 10px;" />
-            `).join('')}
+          <body style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #fff;">
+            <img src="${link}" alt="QR Code" style="border: 5px solid black;" />
             <script>
               window.onload = function() {
                 window.print();
@@ -71,8 +70,6 @@ const GoogleSheetData = () => {
   return (
     <div className='fondo'>
       <h1>Ultimos agregados</h1>
-      <label htmlFor="codesPerPage">Códigos QR por página:</label>
-      <input type="number" id="codesPerPage" value={codesPerPage} onChange={(e) => setCodesPerPage(parseInt(e.target.value))} />
       <ul>
         {sheetData.map((item, index) => (
           <li key={index}>
@@ -81,7 +78,7 @@ const GoogleSheetData = () => {
               <br />
               <strong>QR</strong>: <ImageDisplay link={item["QRserv\r"]} />
               <br />
-              <button onClick={() => handlePrintQR(Array.from({ length: codesPerPage }, () => item["QRserv\r"]))}>Imprimir QR</button>
+              <button onClick={() => handlePrintQR(item["QRserv\r"])}>Imprimir QR</button>
             </div>
           </li>
         ))}
