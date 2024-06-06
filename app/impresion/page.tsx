@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 const GoogleSheetData = () => {
   const [sheetData, setSheetData] = useState<{ [key: string]: string }[]>([]);
+  const [selectedQRs, setSelectedQRs] = useState<string[]>([]);
   const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR9s1KZEX30u4NRRrCakzW3EaqQObHh4jAB9HJ5GUybTdceeRagq76vE1T8CwN5FJ-gmsvdZcdsNT4M/pub?output=csv';
 
   useEffect(() => {
@@ -42,16 +43,30 @@ const GoogleSheetData = () => {
     fetchSheetData();
   }, []);
 
-  const handlePrintQR = (link: string) => {
+  const handleToggleQR = (link: string) => {
+    setSelectedQRs((prevSelectedQRs) =>
+      prevSelectedQRs.includes(link)
+        ? prevSelectedQRs.filter((qr) => qr !== link)
+        : [...prevSelectedQRs, link]
+    );
+  };
+
+  const handlePrintSelectedQRs = () => {
+    if (selectedQRs.length === 0) return;
+
     const printWindow = window.open('', '_blank');
     if (printWindow) {
       printWindow.document.write(`
         <html>
           <head>
             <title>Print QR</title>
+            <style>
+              body { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; padding: 20px; }
+              img { margin: 10px; border: 5px solid black; }
+            </style>
           </head>
-          <body style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #fff;">
-            <img src="${link}" alt="QR Code" style="border: 5px solid black;" />
+          <body>
+            ${selectedQRs.map((link) => `<img src="${link}" alt="QR Code" />`).join('')}
             <script>
               window.onload = function() {
                 window.print();
@@ -78,11 +93,16 @@ const GoogleSheetData = () => {
               <br />
               <strong>QR</strong>: <ImageDisplay link={item["QRserv\r"]} />
               <br />
-              <button onClick={() => handlePrintQR(item["QRserv\r"])}>Imprimir QR</button>
+              <input
+                type="checkbox"
+                checked={selectedQRs.includes(item["QRserv\r"])}
+                onChange={() => handleToggleQR(item["QRserv\r"])}
+              /> Seleccionar para imprimir
             </div>
           </li>
         ))}
       </ul>
+      <button onClick={handlePrintSelectedQRs}>Imprimir QR seleccionados</button>
     </div>
   );
 };
