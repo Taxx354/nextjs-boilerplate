@@ -178,7 +178,7 @@ const GoogleSheetData = () => {
                 onChange={(e) => setNumCopies(Math.min(5, Math.max(1, parseInt(e.target.value))))}
               />
             </label>
-            <button onClick={handlePrintQR}>Imprimir QR</button>
+            <button onClick={handlePrintQR}>Imprimir</button>
           </div>
         )}
       </div>
