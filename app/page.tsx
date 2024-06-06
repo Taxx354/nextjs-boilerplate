@@ -4,8 +4,6 @@ import React, { useState, useEffect } from 'react';
 
 // Componente para mostrar la imagen
 const ImageDisplay = ({ url }: { url: string }) => {
-  console.log("url: " + url);
-
   function getFileIdFromUrl(url: string) {
     const regex = /id=([^&]+)/;
     const match = url.match(regex);
@@ -35,6 +33,8 @@ const ImageDisplay = ({ url }: { url: string }) => {
 // Componente principal
 const GoogleSheetData = () => {
   const [sheetData, setSheetData] = useState<{ [key: string]: string }[]>([]);
+  const [selectedQR, setSelectedQR] = useState<string | null>(null);
+  const [numCopies, setNumCopies] = useState(1);
   const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR9s1KZEX30u4NRRrCakzW3EaqQObHh4jAB9HJ5GUybTdceeRagq76vE1T8CwN5FJ-gmsvdZcdsNT4M/pub?output=csv';
 
   useEffect(() => {
@@ -77,7 +77,38 @@ const GoogleSheetData = () => {
     };
 
     fetchSheetData();
-  }, []); // Ejecutar una sola vez al cargar el componente
+  }, []);
+
+  const handlePrintQR = () => {
+    if (!selectedQR) return;
+
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Print QR</title>
+            <style>
+              body { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; padding: 20px; }
+              img { width: 1.5cm; height: 1.5cm; margin: 5px; border: 1px solid black; }
+            </style>
+          </head>
+          <body>
+            ${Array(numCopies).fill(`<img src="${selectedQR}" alt="QR Code" />`).join('')}
+            <script>
+              window.onload = function() {
+                window.print();
+                window.onafterprint = function() {
+                  window.close();
+                };
+              };
+            </script>
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+    }
+  };
 
   return (
     <div>
@@ -100,7 +131,7 @@ const GoogleSheetData = () => {
                   <ImageDisplay url={item['Subir una Imagen de Perfil de la mascota']} />
                 </div>
                 <br />
-                <strong>DNI</strong>: {item['DNI']}
+                <strong>DNI</strong>: {item['DNI del dueño de la mascota (sin puntos)']}
                 <br />
                 <strong>Nombre dueño</strong>: {item['Nombre del Dueño de la Mascota']} {item['Apellido del Dueño de la Mascota']}
                 <br />
@@ -115,10 +146,27 @@ const GoogleSheetData = () => {
                 <strong>Celular dueño</strong>: {item['Telefono celular']}
                 <br />
                 <strong>QR</strong>: <ImageDisplay url={item["QRserv\r"]}/>
+                <br />
+                <button onClick={() => setSelectedQR(item["QRserv\r"])}>Seleccionar QR</button>
               </li>
             ))}
           </ul>
         </div>
+        {selectedQR && (
+          <div>
+            <label>
+              Cantidad de copias (1-5):
+              <input
+                type="number"
+                min="1"
+                max="5"
+                value={numCopies}
+                onChange={(e) => setNumCopies(Math.min(5, Math.max(1, parseInt(e.target.value))))}
+              />
+            </label>
+            <button onClick={handlePrintQR}>Imprimir QR</button>
+          </div>
+        )}
       </div>
     </div>
   );
