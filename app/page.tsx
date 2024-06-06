@@ -10,7 +10,8 @@ const ImageDisplay = ({ url }: { url: string }) => {
     return match ? match[1] : null;
   }
 
-  const fileId = getFileIdFromUrl(url);
+  const cleanUrl = url.trim(); // Limpiar el enlace de caracteres innecesarios
+  const fileId = getFileIdFromUrl(cleanUrl);
 
   return (
     <div>
@@ -24,7 +25,7 @@ const ImageDisplay = ({ url }: { url: string }) => {
           allowFullScreen
         ></iframe>
       ) : (
-        <p>Imagen no disponible</p>
+        <p>QR no disponible</p>
       )}
     </div>
   );
@@ -82,6 +83,8 @@ const GoogleSheetData = () => {
   const handlePrintQR = () => {
     if (!selectedQR) return;
 
+    const cleanSelectedQR = selectedQR.trim(); // Limpiar el enlace de caracteres innecesarios
+
     const printWindow = window.open('', '_blank');
     if (printWindow) {
       printWindow.document.write(`
@@ -94,7 +97,7 @@ const GoogleSheetData = () => {
             </style>
           </head>
           <body>
-            ${Array(numCopies).fill(`<img src="${selectedQR}" alt="QR Code" />`).join('')}
+            ${Array(numCopies).fill(`<img src="${cleanSelectedQR}" alt="QR Code" />`).join('')}
             <script>
               window.onload = function() {
                 window.print();
@@ -159,7 +162,7 @@ const GoogleSheetData = () => {
                 <br />
                 <strong>QR</strong>: <ImageDisplay url={item["QRserv\r"]}/>
                 <br />
-                <button onClick={() => setSelectedQR(item["QRserv\r"])}>Seleccionar QR</button>
+                <button onClick={() => setSelectedQR(item["QRserv\r"].trim())}>Seleccionar QR</button>
               </li>
             ))}
           </ul>
