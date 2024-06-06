@@ -139,14 +139,23 @@ const GoogleSheetData = () => {
                 <br />
                 <strong>Tipo de mascota</strong>: {item['Tipo de mascota']}
                 <br />
-
                 <strong>Raza</strong>: {item['Raza']}
                 <br />
-                <strong>Caracteristica adicional</strong>: {item['Algún comentario particular de la mascota Ej: manchas o rasgos a tener en cuenta']}
+                <strong>Característica adicional</strong>: {item['Algún comentario particular de la mascota Ej: manchas o rasgos a tener en cuenta']}
                 <br />
-                <strong>Correo electronico</strong>: {item['Dirección de correo electrónico']}
+                <strong>¿Está castrado?</strong>: {item['Está Castrado/a']}
                 <br />
-                <strong>Celular dueño</strong>: {item['Telefono celular']}
+                <strong>Teléfono celular del dueño</strong>: {item['Teléfono del Dueño de la mascota']}
+                <br />
+                <strong>Teléfono celular secundario</strong>: {item['Teléfono Opcional']}
+                <br />
+                <strong>Correo electrónico</strong>: {item['Dirección de correo electrónico']}
+                <br />
+                <strong>Dirección</strong>: {item['Dirección (calle número)']}
+                <br />
+                <strong>Entre qué calles</strong>: {item['Entre qué calles']}
+                <br />
+                <strong>Localidad</strong>: {item['Localidad']}
                 <br />
                 <strong>QR</strong>: <ImageDisplay url={item["QRserv\r"]}/>
                 <br />
