@@ -140,9 +140,7 @@ const GoogleSheetData = () => {
                 <br />
                 <strong>Nombre mascota</strong>: {item['Nombre de la MASCOTA']}
                 <br />
-                <strong>Tipo de mascota</strong>: {item['Tipo de mascota']}
-                <br />
-                <strong>Raza</strong>: {item['Raza']}
+                <strong>Tipo de mascota</strong>: {item['Tipo de Mascota']}
                 <br />
                 <strong>Característica adicional</strong>: {item['Algún comentario particular de la mascota Ej: manchas o rasgos a tener en cuenta']}
                 <br />
