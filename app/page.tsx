@@ -93,7 +93,7 @@ const GoogleSheetData = () => {
             <title>Print QR</title>
             <style>
               body { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: flex-end; padding: 20px; }
-              img { width: 2cm; height: 2cm; margin: 5px; border: 1px solid black; position: absolute; right: 10px; bottom: 10px; }
+              img { width: 1.5cm; height: 1.5cm; margin: 5px; border: 1px solid black; position: absolute; right: 10px; top: 10px; }
             </style>
           </head>
           <body>
