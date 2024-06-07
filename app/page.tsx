@@ -92,8 +92,8 @@ const GoogleSheetData = () => {
           <head>
             <title>Print QR</title>
             <style>
-              body { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; padding: 20px; }
-              img { width: 1.5cm; height: 1.5cm; margin: 5px; border: 1px solid black; }
+              body { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: flex-end; padding: 20px; }
+              img { width: 2cm; height: 2cm; margin: 5px; border: 1px solid black; position: absolute; right: 10px; bottom: 10px; }
             </style>
           </head>
           <body>
@@ -137,7 +137,6 @@ const GoogleSheetData = () => {
                   <ImageDisplay url={item['Subir una Imagen de Perfil de la mascota']} />
                 </div>
                 <br />
-                <strong>DNI</strong>: {item['DNI del dueño de la mascota (sin puntos)']}
                 <br />
                 <strong>Nombre dueño</strong>: {item['Nombre del Dueño de la Mascota']} {item['Apellido del Dueño de la Mascota']}
                 <br />
@@ -147,17 +146,12 @@ const GoogleSheetData = () => {
                 <br />
                 <strong>Característica adicional</strong>: {item['Algún comentario particular de la mascota Ej: manchas o rasgos a tener en cuenta']}
                 <br />
-                <strong>¿Está castrado?</strong>: {item['Está Castrado/a']}
-                <br />
                 <strong>Teléfono celular del dueño</strong>: {item['Teléfono del Dueño de la mascota']}
                 <br />
-                <strong>Teléfono celular secundario</strong>: {item['Teléfono Opcional']}
                 <br />
                 <strong>Correo electrónico</strong>: {item['Dirección de correo electrónico']}
                 <br />
                 <strong>Dirección</strong>: {item['Dirección (calle número)']}
-                <br />
-                <strong>Entre qué calles</strong>: {item['Entre qué calles']}
                 <br />
                 <strong>Localidad</strong>: {item['Localidad']}
                 <br />
