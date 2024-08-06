@@ -154,16 +154,18 @@ const GoogleSheetData = () => {
                 <br />
                 <strong>Localidad</strong>: {item['Localidad']}
                 <br />
-                <button onClick={() => setSelectedQR(item["QRserv\r"].trim())}>Imprimir QR</button>
-                <br />
                 <a
-                 href={`https://wa.me/${item['Teléfono del Dueño de la mascota']}?text=Hola, encontré a tu mascota "${item['Nombre de la MASCOTA']}"`}
-                target="_blank"
-                rel="noopener noreferrer"
+                  href={`https://wa.me/${item['Teléfono del Dueño de la mascota']}?text=Hola, encontré a tu mascota "${item['Nombre de la MASCOTA']}".`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="whatsapp-link"
                 >
-                <Image src="/app/whalogo.png" alt="Enviar mensaje por WhatsApp" width={32} height={32} />
+                  <Image src="/app/whalogo.png" alt="Enviar mensaje por WhatsApp" width={32} height={32} />
+                  Enviar mensaje
                 </a>
-
+                <br />
+                <button className="print-btn" onClick={() => setSelectedQR(item["QRserv\r"].trim())}>Imprimir QR</button>
+                <br />
               </li>
             ))}
           </ul>
@@ -184,6 +186,24 @@ const GoogleSheetData = () => {
           </div>
         )}
       </div>
+      <style jsx>{`
+        .whatsapp-link {
+          display: flex;
+          align-items: center;
+          font-size: 16px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+
+        .whatsapp-link img {
+          margin-right: 5px;
+        }
+
+        .print-btn {
+          font-size: 14px;
+          padding: 5px 10px;
+        }
+      `}</style>
     </div>
   );
 };
