@@ -148,10 +148,6 @@ const GoogleSheetData = () => {
                 <br />
                 <strong>Teléfono celular del dueño</strong>: {item['Teléfono del Dueño de la mascota']}
                 <br />
-                <strong>Correo electrónico</strong>: {item['Dirección de correo electrónico']}
-                <br />
-                <strong>Dirección</strong>: {item['Dirección (calle número)']}
-                <br />
                 <strong>Localidad</strong>: {item['Localidad']}
                 <br />
                 <a
@@ -160,10 +156,10 @@ const GoogleSheetData = () => {
                   rel="noopener noreferrer"
                   className="whatsapp-link"
                 >
+                  <br />
                   <Image src="/app/whalogo.png" alt="Enviar mensaje por WhatsApp" width={32} height={32} />
                   Enviar mensaje
                 </a>
-                <br />
                 <button className="print-btn" onClick={() => setSelectedQR(item["QRserv\r"].trim())}>Imprimir QR</button>
                 <br />
               </li>
