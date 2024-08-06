@@ -147,7 +147,7 @@ const GoogleSheetData = () => {
                 <strong>Característica adicional</strong>: {item['Algún comentario particular de la mascota Ej: manchas o rasgos a tener en cuenta']}
                 <br />
                 <strong>Teléfono celular del dueño</strong>: {item['Teléfono del Dueño de la mascota']}
-                <br> 
+                <br />
                 <strong>Correo electrónico</strong>: {item['Dirección de correo electrónico']}
                 <br />
                 <strong>Dirección</strong>: {item['Dirección (calle número)']}
@@ -157,7 +157,7 @@ const GoogleSheetData = () => {
                 <button onClick={() => setSelectedQR(item["QRserv\r"].trim())}>Imprimir QR</button>
                 <br />
                 <a
-                  href={`https://wa.me/${item['Teléfono del Dueño de la mascota']}?text=Hola, encontré tu mascota en la calle`}
+                  href={`https://wa.me/${item['Teléfono del Dueño de la mascota']}?text=Hola, me gustaría hablar sobre tu mascota.`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
