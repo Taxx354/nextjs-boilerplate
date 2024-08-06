@@ -153,9 +153,7 @@ const GoogleSheetData = () => {
                 <strong>Dirección</strong>: {item['Dirección (calle número)']}
                 <br />
                 <strong>Localidad</strong>: {item['Localidad']}
-                <br />
-                <button onClick={() => setSelectedQR(item["QRserv\r"].trim())}>Imprimir QR</button>
-                <br />
+
                 <a
                  href={`https://wa.me/${item['Teléfono del Dueño de la mascota']}?text=Hola, encontré a tu mascota ${item['Nombre de la MASCOTA']}.`}
                 target="_blank"
@@ -167,6 +165,9 @@ const GoogleSheetData = () => {
               </li>
             ))}
           </ul>
+          <br />
+                <button onClick={() => setSelectedQR(item["QRserv\r"].trim())}>Imprimir QR</button>
+                <br />
         </div>
         {selectedQR && (
           <div>
