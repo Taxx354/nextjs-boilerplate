@@ -1,14 +1,14 @@
-'use client'
-import Image from 'next/image'
+'use client';
+import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 
 // Componente para mostrar la imagen
 const ImageDisplay = ({ url }: { url: string }) => {
-  function getFileIdFromUrl(url: string) {
+  const getFileIdFromUrl = (url: string) => {
     const regex = /id=([^&]+)/;
     const match = url.match(regex);
     return match ? match[1] : null;
-  }
+  };
 
   const cleanUrl = url.trim(); // Limpiar el enlace de caracteres innecesarios
   const fileId = getFileIdFromUrl(cleanUrl);
