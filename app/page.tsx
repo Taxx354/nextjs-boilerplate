@@ -161,7 +161,7 @@ const GoogleSheetData = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 >
-                <Image src="/whalogo.png" alt="Enviar mensaje por WhatsApp" width={32} height={32} />
+                <Image src="/app/whalogo.png" alt="Enviar mensaje por WhatsApp" width={32} height={32} />
                 </a>
 
               </li>
