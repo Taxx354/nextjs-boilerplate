@@ -157,7 +157,7 @@ const GoogleSheetData = () => {
                 <button onClick={() => setSelectedQR(item["QRserv\r"].trim())}>Imprimir QR</button>
                 <br />
                 <a
-                 href={`https://wa.me/${item['Teléfono del Dueño de la mascota']}?text=Hola, encontré a tu mascota ${item['Nombre de la MASCOTA']}.`}
+                 href={`https://wa.me/${item['Teléfono del Dueño de la mascota']}?text=Hola, encontré a tu mascota "${item['Nombre de la MASCOTA']}"`}
                 target="_blank"
                 rel="noopener noreferrer"
                 >
