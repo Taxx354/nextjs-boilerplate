@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
 
 // Componente para mostrar la imagen
 const ImageDisplay = ({ url }: { url: string }) => {
@@ -90,7 +91,7 @@ const GoogleSheetData = () => {
       printWindow.document.write(`
         <html>
           <head>
-            <title>Print QR</title>
+            <title>Identificación Mascotas</title>
             <style>
               body { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: flex-end; padding: 20px; }
               img { width: 1.5cm; height: 1.5cm; margin: 5px; border: 1px solid black; position: absolute; right: 10px; top: 10px; }
@@ -115,6 +116,9 @@ const GoogleSheetData = () => {
 
   return (
     <div>
+      <Head>
+        <title>Identificación Mascotas</title>
+      </Head>
       <header>
         <div className='div-head'>
           <Image src="/app/Logos.png" alt="Logos" width={75} height={75} />
