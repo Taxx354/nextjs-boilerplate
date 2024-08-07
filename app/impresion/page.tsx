@@ -1,6 +1,21 @@
 'use client'
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
+import '../styles/globals.css';
+
+function MyApp({ Component, pageProps }) {
+  return (
+    <>
+      <Head>
+        <title>Tu Nuevo Título</title>
+      </Head>
+    </>
+  );
+}
+
+export default MyApp;
+
 
 const GoogleSheetData = () => {
   const [sheetData, setSheetData] = useState<{ [key: string]: string }[]>([]);
