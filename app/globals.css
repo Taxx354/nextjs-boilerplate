@@ -18,16 +18,25 @@ body {
   font-size: 16px;
   line-height: 1.5;
   color: #fff;
-  background-color: #222;
   margin: 20px;
+  background-image: linear-gradient(rgba(188, 138, 95, 0.75), rgba(188, 138, 95, 0.75)), url('/Fondo.png'); /* Ruta a la imagen de fondo */
+  background-size: cover;
+  
 }
 
 /* Encabezado */
 header {
-  background-color: #333;
-  padding: 20px;
-  height: 65px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: fixed; /* Fija el encabezado en la parte superior de la página */
+  top: 0;          /* Asegura que esté alineado con la parte superior */
+  left: 0;
+  width: 100%;     /* Ocupa todo el ancho de la página */
+  background-color: #472700; /* Color de fondo del encabezado */
+  padding: 20px;   /* Espacio interior alrededor del contenido */
+  height: 75px;    /* Altura fija del encabezado */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra para darle un efecto de profundidad */
+  z-index: 1000;   /* Asegura que el encabezado esté por encima de otros elementos */
+  display: flex;   /* Flexbox para alinear el contenido */
+  align-items: center;
 }
 
 .contenedor img {
@@ -151,11 +160,11 @@ th {
   }
 }
 .div-head img {
-  margin-top: -27px;
+  margin-top: -55px;
 }
 .div-head h1 {
-  margin-top: -50px;
-  margin-left: 77px;
+  margin-top: -85px;
+  margin-left: 100px;
 }
 
 .fondo{

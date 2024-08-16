@@ -121,8 +121,8 @@ const GoogleSheetData = () => {
       </Head>
       <header>
         <div className='div-head'>
-          <Image src="/app/Logos.png" alt="Logos" width={75} height={75} />
-          <h1><strong> IDENTIFICACIÓN MASCOTAS</strong></h1>
+        <Image src="/logoMascotas.png" alt="Logo Mascotas" width={75} height={75} />
+        <h1><strong>UN QR PARA TUS MASCOTAS</strong></h1>
         </div>
         <br />
       </header>
