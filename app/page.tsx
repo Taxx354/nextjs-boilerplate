@@ -39,6 +39,7 @@ const GoogleSheetData = () => {
   const [numCopies, setNumCopies] = useState(1);
   const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR9s1KZEX30u4NRRrCakzW3EaqQObHh4jAB9HJ5GUybTdceeRagq76vE1T8CwN5FJ-gmsvdZcdsNT4M/pub?output=csv';
 
+
   useEffect(() => {
     const fetchSheetData = async () => {
       try {
@@ -133,6 +134,7 @@ const GoogleSheetData = () => {
           <br/>
           <ul>
             {sheetData.map((item, index) => (
+              console.log(item)
               <li key={index}>
                 <div className='contenedor'>
                   <ImageDisplay url={item['Subir una Imagen de Frente de la Mascota']} />
