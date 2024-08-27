@@ -52,7 +52,7 @@ const GoogleSheetData = () => {
       printWindow.document.write(`
         <html>
           <head>
-            <title>IDENTIFICACION MASCOTAS</title>
+            <title>IDENTIFICACIÓN MASCOTAS</title>
             <style>
               body { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; padding: 20px; }
               img { width: 1.5cm; height: 1.5cm; margin: 5px; border: 1px solid black; }

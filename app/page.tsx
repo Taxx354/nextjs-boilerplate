@@ -37,7 +37,7 @@ const GoogleSheetData = () => {
   const [sheetData, setSheetData] = useState<{ [key: string]: string }[]>([]);
   const [selectedQR, setSelectedQR] = useState<string | null>(null);
   const [numCopies, setNumCopies] = useState(1);
-  const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR9s1KZEX30u4NRRrCakzW3EaqQObHh4jAB9HJ5GUybTdceeRagq76vE1T8CwN5FJ-gmsvdZcdsNT4M/pub?output=csv';
+  const url = 'https://docs.google.com/spreadsheets/d/1zZHv7uEsNxaNoMOm3Iqy_388JySd4g4P2PHncQ4vRXc/pub?output=csv';
 
 
   useEffect(() => {
