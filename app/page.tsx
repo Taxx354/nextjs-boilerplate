@@ -165,7 +165,7 @@ const GoogleSheetData = () => {
                   <Image src="/app/whalogo.png" alt="Enviar mensaje por WhatsApp" width={32} height={32} />
                   Enviar mensaje
                 </a>
-                <button className="print-btn" onClick={() => setSelectedQR(item["QRserv\r"].trim())}>Imprimir QR</button>
+                <button className="print-btn" onClick={() => setSelectedQR(item["QR\r"].trim())}>Imprimir QR</button>
                 <br />
               </li>
             ))}
