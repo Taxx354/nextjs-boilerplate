@@ -11,7 +11,7 @@ const ImageDisplay = ({ url }: { url: string }) => {
     return match ? match[1] : null;
   };
 
-  const cleanUrl = url.trim(); // Limpiar el enlace de caracteres innecesarios
+  const cleanUrl = url.trim();
   const fileId = getFileIdFromUrl(cleanUrl);
 
   return (
@@ -37,8 +37,8 @@ const GoogleSheetData = () => {
   const [sheetData, setSheetData] = useState<{ [key: string]: string }[]>([]);
   const [selectedQR, setSelectedQR] = useState<string | null>(null);
   const [numCopies, setNumCopies] = useState(1);
-  const url = 'https://docs.google.com/spreadsheets/d/1zZHv7uEsNxaNoMOm3Iqy_388JySd4g4P2PHncQ4vRXc/pub?output=csv';
-
+  const url =
+    'https://docs.google.com/spreadsheets/d/1zZHv7uEsNxaNoMOm3Iqy_388JySd4g4P2PHncQ4vRXc/pub?output=csv';
 
   useEffect(() => {
     const fetchSheetData = async () => {
@@ -47,14 +47,14 @@ const GoogleSheetData = () => {
         const data = await response.text();
         const lines = data.split('\n');
         const headers = lines[0].split(',');
-        const jsonData = [];
+        const jsonData: { [key: string]: string }[] = [];
 
         for (let i = 1; i < lines.length; i++) {
           const currentLine = lines[i].split(',');
           const obj: { [key: string]: string } = {};
 
           for (let j = 0; j < headers.length; j++) {
-            obj[headers[j]] = currentLine[j];
+            obj[headers[j].trim()] = currentLine[j]?.trim() || '';
           }
 
           jsonData.push(obj);
@@ -65,7 +65,10 @@ const GoogleSheetData = () => {
           const dni = params.get('dni');
 
           if (dni) {
-            const filteredData = jsonData.filter(item => String(item['DNI del dueño de la mascota (sin puntos)']) === dni);
+            const filteredData = jsonData.filter(
+              (item) =>
+                String(item['DNI del dueño de la mascota (sin puntos)']) === dni
+            );
             if (Array.isArray(filteredData)) {
               setSheetData(filteredData);
             }
@@ -83,9 +86,11 @@ const GoogleSheetData = () => {
   }, []);
 
   const handlePrintQR = () => {
-    if (!selectedQR) return;
-
-    const cleanSelectedQR = selectedQR.trim(); // Limpiar el enlace de caracteres innecesarios
+    console.log('Intentando imprimir QR:', selectedQR);
+    if (!selectedQR) {
+      alert('No se ha seleccionado un QR válido.');
+      return;
+    }
 
     const printWindow = window.open('', '_blank');
     if (printWindow) {
@@ -95,11 +100,11 @@ const GoogleSheetData = () => {
             <title>Identificación Mascotas</title>
             <style>
               body { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: flex-end; padding: 20px; }
-              img { width: 1.5cm; height: 1.5cm; margin: 5px; border: 1px solid black; position: absolute; right: 10px; top: 10px; }
+              img { width: 1.5cm; height: 1.5cm; margin: 5px; border: 1px solid black; }
             </style>
           </head>
           <body>
-            ${Array(numCopies).fill(`<img src="${cleanSelectedQR}" alt="QR Code" />`).join('')}
+            ${Array(numCopies).fill(`<img src="${selectedQR}" alt="QR Code" />`).join('')}
             <script>
               window.onload = function() {
                 window.print();
@@ -121,37 +126,44 @@ const GoogleSheetData = () => {
         <title>Identificación Mascotas</title>
       </Head>
       <header>
-        <div className='div-head'>
-        <Image src="/logoMascotas.png" alt="Logo Mascotas" width={75} height={75} />
-        <h1><strong>UN QR PARA TUS MASCOTAS</strong></h1>
+        <div className="div-head">
+          <Image src="/logoMascotas.png" alt="Logo Mascotas" width={75} height={75} />
+          <h1>
+            <strong>UN QR PARA TUS MASCOTAS</strong>
+          </h1>
         </div>
         <br />
       </header>
       <br />
       <br />
-      <div className='div-centrado'>
-        <div className='contenedor'>
-          <br/>
+      <div className="div-centrado">
+        <div className="contenedor">
+          <br />
           <ul>
             {sheetData.map((item, index) => (
               <li key={index}>
-                <div className='contenedor'>
+                <div className="contenedor">
                   <ImageDisplay url={item['Subir una Imagen de Frente de la Mascota']} />
                 </div>
-                <div className='contenedor'>
+                <div className="contenedor">
                   <ImageDisplay url={item['Subir una Imagen de Perfil de la mascota']} />
                 </div>
                 <br />
                 <br />
-                <strong>Nombre dueño</strong>: {item['Nombre del Dueño de la Mascota']} {item['Apellido del Dueño de la Mascota']}
+                <strong>Nombre dueño</strong>: {item['Nombre del Dueño de la Mascota']}{' '}
+                {item['Apellido del Dueño de la Mascota']}
                 <br />
                 <strong>Nombre mascota</strong>: {item['Nombre de la MASCOTA']}
                 <br />
                 <strong>Tipo de mascota</strong>: {item['Tipo de Mascota']}
                 <br />
-                <strong>Característica adicional</strong>: {item['Algún comentario particular de la mascota Ej: manchas o rasgos a tener en cuenta']}
+                <strong>Característica adicional</strong>:{' '}
+                {item[
+                  'Algún comentario particular de la mascota Ej: manchas o rasgos a tener en cuenta'
+                ]}
                 <br />
-                <strong>Teléfono celular del dueño</strong>: {item['Teléfono del Dueño de la mascota']}
+                <strong>Teléfono celular del dueño</strong>:{' '}
+                {item['Teléfono del Dueño de la mascota']}
                 <br />
                 <strong>Localidad</strong>: {item['Localidad']}
                 <br />
@@ -165,7 +177,12 @@ const GoogleSheetData = () => {
                   <Image src="/app/whalogo.png" alt="Enviar mensaje por WhatsApp" width={32} height={32} />
                   Enviar mensaje
                 </a>
-                <button className="print-btn" onClick={() => setSelectedQR(item["QR\r"].trim())}>Imprimir QR</button>
+                <button
+                  className="print-btn"
+                  onClick={() => setSelectedQR(item['QR']?.trim() || '')}
+                >
+                  Imprimir QR
+                </button>
                 <br />
               </li>
             ))}
@@ -180,7 +197,9 @@ const GoogleSheetData = () => {
                 min="1"
                 max="5"
                 value={numCopies}
-                onChange={(e) => setNumCopies(Math.min(5, Math.max(1, parseInt(e.target.value))))}
+                onChange={(e) =>
+                  setNumCopies(Math.min(5, Math.max(1, parseInt(e.target.value))) || 1)
+                }
               />
             </label>
             <button onClick={handlePrintQR}>Imprimir</button>
@@ -203,6 +222,7 @@ const GoogleSheetData = () => {
         .print-btn {
           font-size: 14px;
           padding: 5px 10px;
+          cursor: pointer;
         }
       `}</style>
     </div>
