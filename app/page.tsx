@@ -179,7 +179,7 @@ const GoogleSheetData = () => {
                 </a>
                 <button
                   className="print-btn"
-                  onClick={() => setSelectedQR(item['QR']?.trim() || '')}
+                  onClick={() => setSelectedQR(item['QRserv']?.trim() || '')}
                 >
                   Imprimir QR
                 </button>
