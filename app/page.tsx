@@ -38,7 +38,7 @@ const GoogleSheetData = () => {
   const [selectedQR, setSelectedQR] = useState<string | null>(null);
   const [numCopies, setNumCopies] = useState(1);
   const url =
-    'https://docs.google.com/spreadsheets/d/1zZHv7uEsNxaNoMOm3Iqy_388JySd4g4P2PHncQ4vRXc/pub?output=csv';
+    'https://docs.google.com/spreadsheets/d/e/2PACX-1vRxK9uTzFJO6PdDE3AbOs93KMmlnDWXseOtWN9jk7Y0m2lkB-lmfmGqrxjrde6k6-kRdjQd9LU5pImz/pub?output=tsv';
 
   useEffect(() => {
     const fetchSheetData = async () => {
@@ -46,11 +46,11 @@ const GoogleSheetData = () => {
         const response = await fetch(url);
         const data = await response.text();
         const lines = data.split('\n');
-        const headers = lines[0].split(',');
+        const headers = lines[0].split('\t'); // Change to tab separator
         const jsonData: { [key: string]: string }[] = [];
 
         for (let i = 1; i < lines.length; i++) {
-          const currentLine = lines[i].split(',');
+          const currentLine = lines[i].split('\t'); // Change to tab separator
           const obj: { [key: string]: string } = {};
 
           for (let j = 0; j < headers.length; j++) {
@@ -85,9 +85,9 @@ const GoogleSheetData = () => {
     fetchSheetData();
   }, []);
 
-  const handlePrintQR = () => {
-    console.log('Intentando imprimir QR:', selectedQR);
-    if (!selectedQR) {
+  const handlePrintQR = (qrData: string, buttonRef: React.RefObject<HTMLButtonElement>) => {
+    console.log('Intentando imprimir QR:', qrData);
+    if (!qrData) {
       alert('No se ha seleccionado un QR válido.');
       return;
     }
@@ -104,7 +104,7 @@ const GoogleSheetData = () => {
             </style>
           </head>
           <body>
-            ${Array(numCopies).fill(`<img src="${selectedQR}" alt="QR Code" />`).join('')}
+            ${Array(numCopies).fill(`<img src="${qrData}" alt="QR Code" />`).join('')}
             <script>
               window.onload = function() {
                 window.print();
@@ -117,6 +117,10 @@ const GoogleSheetData = () => {
         </html>
       `);
       printWindow.document.close();
+    }
+
+    if (buttonRef.current) {
+      buttonRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -140,52 +144,61 @@ const GoogleSheetData = () => {
         <div className="contenedor">
           <br />
           <ul>
-            {sheetData.map((item, index) => (
-              <li key={index}>
-                <div className="contenedor">
-                  <ImageDisplay url={item['Subir una Imagen de Frente de la Mascota']} />
-                </div>
-                <div className="contenedor">
-                  <ImageDisplay url={item['Subir una Imagen de Perfil de la mascota']} />
-                </div>
-                <br />
-                <br />
-                <strong>Nombre dueño</strong>: {item['Nombre del Dueño de la Mascota']}{' '}
-                {item['Apellido del Dueño de la Mascota']}
-                <br />
-                <strong>Nombre mascota</strong>: {item['Nombre de la MASCOTA']}
-                <br />
-                <strong>Tipo de mascota</strong>: {item['Tipo de Mascota']}
-                <br />
-                <strong>Característica adicional</strong>:{' '}
-                {item[
-                  'Algún comentario particular de la mascota Ej: manchas o rasgos a tener en cuenta'
-                ]}
-                <br />
-                <strong>Teléfono celular del dueño</strong>:{' '}
-                {item['Teléfono del Dueño de la mascota']}
-                <br />
-                <strong>Localidad</strong>: {item['Localidad']}
-                <br />
-                <a
-                  href={`https://wa.me/${item['Teléfono del Dueño de la mascota']}?text=Hola, encontré a tu mascota "${item['Nombre de la MASCOTA']}".`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="whatsapp-link"
-                >
+            {sheetData.map((item, index) => {
+              const phoneNumber = item['Teléfono del Dueño de la mascota (Colocar código de país y área Ej: 54 9 para Argentina y Bs.As. Luego el número de celular sin 0 (cero) delante. No utilizar ningún signo para separar los números)'].replace(/\s+/g, '');
+              const buttonRef = React.createRef<HTMLButtonElement>();
+              return (
+                <li key={index}>
+                  <div className="contenedor">
+                    <ImageDisplay url={item['Subir una Imagen de Frente de la Mascota']} />
+                  </div>
+                  <div className="contenedor">
+                    <ImageDisplay url={item['Subir una Imagen de Perfil de la mascota']} />
+                  </div>
                   <br />
-                  <Image src="/app/whalogo.png" alt="Enviar mensaje por WhatsApp" width={32} height={32} />
-                  Enviar mensaje
-                </a>
-                <button
-                  className="print-btn"
-                  onClick={() => setSelectedQR(item['QRserv']?.trim() || '')}
-                >
-                  Imprimir QR
-                </button>
-                <br />
-              </li>
-            ))}
+                  <br />
+                  <strong>Nombre dueño</strong>: {item['Nombre del Dueño de la Mascota']}{' '}
+                  {item['Apellido del Dueño de la Mascota']}
+                  <br />
+                  <strong>Nombre mascota</strong>: {item['Nombre de la MASCOTA']}
+                  <br />
+                  <strong>Tipo de mascota</strong>: {item['Tipo de Mascota']}
+                  <br />
+                  <strong>Característica adicional</strong>:{' '}
+                  {item[
+                    'Algún comentario particular de la mascota Ej: manchas o rasgos a tener en cuenta'
+                  ]}
+                  <br />
+                  <strong>Teléfono celular del dueño</strong>: {phoneNumber}
+                  <br />
+                  <strong>Localidad</strong>: {item['Localidad']}
+                  <br />
+                  <a
+                    href={`https://wa.me/${phoneNumber}?text=Hola, encontré a tu mascota "${item['Nombre de la MASCOTA']}".`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="whatsapp-link"
+                  >
+                    <br />
+                    <Image src="/app/whalogo.png" alt="Enviar mensaje por WhatsApp" width={32} height={32} />
+                    Enviar mensaje
+                  </a>
+                  <button
+                    className="print-btn"
+                    ref={buttonRef}
+                    onClick={() => {
+                      const qrData = item['QRserv']?.trim();
+                      console.log('QR Data:', qrData);
+                      setSelectedQR(qrData || '');
+                      handlePrintQR(qrData || '', buttonRef);
+                    }}
+                  >
+                    Imprimir QR
+                  </button>
+                  <br />
+                </li>
+              );
+            })}
           </ul>
         </div>
         {selectedQR && (
@@ -202,7 +215,10 @@ const GoogleSheetData = () => {
                 }
               />
             </label>
-            <button onClick={handlePrintQR}>Imprimir</button>
+            <button onClick={() => {
+              const buttonRef = React.createRef<HTMLButtonElement>();
+              handlePrintQR(selectedQR, buttonRef);
+            }}>Imprimir</button>
           </div>
         )}
       </div>
